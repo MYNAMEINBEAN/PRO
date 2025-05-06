@@ -2,47 +2,38 @@
 <html>
 <head>
 <title>Schoology</title>
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
-    <script src="inspect.js" defer></script>
-  <style>
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script src="inspect.js" defer></script>
+<style>
 body {
     font-family: sans-serif;
-    display: flex;
-    flex-direction: column; /* Changed to column to stack content below particles */
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
     margin: 0;
-    background-color: #000; /* Set background to black */
-    position: relative; /* Needed for absolute positioning of particles */
+    background-color: #000;
+    position: relative;
 }
-
 #particles-js {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     z-index: -1;
 }
-
-.content-wrapper { /* Added a wrapper for your main content */
-    position: relative; /* To ensure content is above particles */
+.content-wrapper {
+    position: relative;
     z-index: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-
 .school-links-container {
     display: flex;
     justify-content: center;
     gap: 20px;
     padding: 20px;
-    margin-bottom: 20px; /* Added some margin below the first link container */
+    margin-bottom: 20px;
 }
-
 .school-link {
     width: 300px;
     text-decoration: none;
@@ -50,25 +41,21 @@ body {
     overflow: hidden;
     position: relative;
 }
-
 .school-image {
     display: block;
     width: 100%;
     height: auto;
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
-
 .school-link:hover .school-image {
     transform: scale(1.05);
     opacity: 0.8;
 }
-
 .school-text {
     padding: 15px;
     text-align: center;
     background-color: #f9f9f9;
 }
-
 .school-link::before {
     content: '';
     position: absolute;
@@ -85,15 +72,61 @@ body {
     transition: opacity 0.3s ease-in-out;
     z-index: -1;
 }
-
 .school-link:hover::before {
     opacity: 1;
 }
-
 @keyframes rainbow-border {
     to {
       background-position: 100% 0;
     }
+}
+/* Add Link Button - always top right */
+#addLinkBtn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    font-size: 2rem;
+    font-family: inherit;
+    padding: 10px 26px 10px 18px;
+    border-radius: 50px;
+    border: none;
+    background: #fff;
+    color: #222;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    font-weight: bold;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+#addLinkBtn span.plus {
+    font-size: 2.2rem;
+    line-height: 1;
+    font-weight: bold;
+    margin-right: 6px;
+}
+#addLinkBtn:hover {
+    background: #eee;
+}
+#iframeContainer {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    border-radius: 0;
+    overflow: hidden;
+    box-shadow: none;
+    background: #111;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: none;
+}
+#iframeContainer.active {
+    display: block;
 }
 </style>
 </head>
@@ -101,7 +134,49 @@ body {
 
 <div id="particles-js"></div>
 
-<div class="content-wrapper">
+<!-- Button is outside mainContent so it's always visible -->
+<button id="addLinkBtn"><span class="plus">&#43;</span> Add Link</button>
+
+<div id="mainContent">
+  <div class="content-wrapper">
+    <p>If it gives an error, reload the page</p>
+    <div class="school-links-container">
+      <a href="ok/craz.html" class="school-link">
+        <img src="img/craz.png" alt="school One Image" class="school-image">
+        <div class="school-text">
+          <h2>Craz</h2>
+          <p>Click to play!</p>
+        </div>
+      </a>
+      <a href="ok/poky.html" class="school-link">
+        <img src="img/poky.png" alt="school One Image" class="school-image">
+        <div class="school-text">
+          <h2>Poky</h2>
+          <p>Click to play!</p>
+        </div>
+      </a>
+      <a href="ok/black.html" class="school-link">
+        <img src="img/black.png" alt="school One Image" class="school-image">
+        <div class="school-text">
+          <h2>Black</h2>
+          <p>Click to play!</p>
+        </div>
+      </a>
+    </div>
+    <a href="ai/beanbasic/index.html" class="school-link">
+      <img src="https://typli.ai/_next/image?url=%2Fai-text-generator.png&w=1200&q=75" alt="school One Image" class="school-image">
+      <div class="school-text">
+        <h2>BEANBASIC AI</h2>
+        <p>Click to chat!</p>
+      </div>
+    </a>
+    <a href="g.html" class="school-link">
+      <img src="https://typli.ai/_next/image?url=%2Fai-text-generator.png&w=1200&q=75" alt="school One Image" class="school-image">
+      <div class="school-text">
+        <h2>bean gamz</h2>
+        <p>Click to chat!</p>
+      </div>
+    </a>
     <a href="pro.html" class="school-link">
       <img src="https://typli.ai/_next/image?url=%2Fai-text-generator.png&w=1200&q=75" alt="school One Image" class="school-image">
       <div class="school-text">
@@ -110,65 +185,79 @@ body {
       </div>
     </a>
   </div>
+</div>
+<div id="iframeContainer"></div>
+
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      particlesJS('particles-js', {
-        particles: {
-          number: {
-            value: 300,
-            density: {
-              enable: true,
-              value_area: 800
-            }
-          },
-          color: {
-            value: '#ffffff'
-          },
-          shape: {
-            type: 'circle'
-          },
-          opacity: {
-            value: 0.5
-          },
-          size: {
-            value: 3
-          },
-          line_linked: {
-            enable: true,
-            distance: 150,
-            color: '#ffffff',
-            opacity: 0.4,
-            width: 1
-          },
-          move: {
-            enable: true,
-            speed: 7
-          }
-        },
-        interactivity: {
-          detect_on: 'canvas',
-          events: {
-            onhover: {
-              enable: true,
-              mode: 'attract'
-            },
-            onclick: {
-              enable: true,
-              mode: 'push'
-            },
-            resize: true
-          },
-          modes: {
-            attract: {
-              distance: 150,
-              duration: 0.5
-            }
-          }
-        },
-        retina_detect: true
-      });
-    });
-  </script>
+document.addEventListener('DOMContentLoaded', function() {
+  particlesJS('particles-js', {
+    particles: {
+      number: { value: 300, density: { enable: true, value_area: 800 } },
+      color: { value: '#ffffff' },
+      shape: { type: 'circle' },
+      opacity: { value: 0.5 },
+      size: { value: 3 },
+      line_linked: { enable: true, distance: 150, color: '#ffffff', opacity: 0.4, width: 1 },
+      move: { enable: true, speed: 7 }
+    },
+    interactivity: {
+      detect_on: 'canvas',
+      events: {
+        onhover: { enable: true, mode: 'attract' },
+        onclick: { enable: true, mode: 'push' },
+        resize: true
+      },
+      modes: { attract: { distance: 150, duration: 0.5 } }
+    },
+    retina_detect: true
+  });
+
+  document.getElementById('addLinkBtn').addEventListener('click', function() {
+    let url = prompt("Enter URL (e.g. https://example.com):");
+    if (!url) return;
+
+    // Add https:// if missing
+    if (!/^https?:\/\//i.test(url)) {
+      url = "https://" + url;
+    }
+
+    // Validate URL using URL constructor and basic domain check
+    let valid = true;
+    try {
+      let parsed = new URL(url);
+      if (!/^https?:$/.test(parsed.protocol)) valid = false;
+      if (!/\./.test(parsed.hostname)) valid = false;
+    } catch (e) {
+      valid = false;
+    }
+
+    if (!valid) {
+      alert("Please enter a valid URL (e.g. https://example.com)");
+      return;
+    }
+
+    // Hide main content
+    document.getElementById('mainContent').style.display = 'none';
+
+    // Construct secured.wiki embed URL
+    let embedUrl = "https://www.secured.wiki/s/embed.html#" + encodeURI(url);
+
+    // Create iframe HTML
+    let iframeHtml = `<iframe id="dynamicFrame" src="${embedUrl}" style="border:0px #ffffff none;" name="myiFrame" scrolling="yes" frameborder="1" marginheight="0px" marginwidth="0px" height="100%" width="100%" allowfullscreen></iframe>`;
+
+    // Show and insert iframe
+    let container = document.getElementById('iframeContainer');
+    container.classList.add('active');
+    container.innerHTML = iframeHtml;
+
+    // After 1 second, reload the iframe
+    setTimeout(function() {
+      let frame = document.getElementById('dynamicFrame');
+      if (frame) frame.src = frame.src;
+    }, 10000);
+  });
+});
+</script>
 
 </body>
 </html>
