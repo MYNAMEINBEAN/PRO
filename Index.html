@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Schoology</title>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <script src="inspect.js" defer></script>
+  <style>
+body {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column; /* Changed to column to stack content below particles */
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #000; /* Set background to black */
+    position: relative; /* Needed for absolute positioning of particles */
+}
+
+#particles-js {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.content-wrapper { /* Added a wrapper for your main content */
+    position: relative; /* To ensure content is above particles */
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.school-links-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    margin-bottom: 20px; /* Added some margin below the first link container */
+}
+
+.school-link {
+    width: 300px;
+    text-decoration: none;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+.school-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.school-link:hover .school-image {
+    transform: scale(1.05);
+    opacity: 0.8;
+}
+
+.school-text {
+    padding: 15px;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+.school-link::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border-radius: 11px;
+    background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+    background-size: 400% 100%;
+    background-position: 0 0;
+    animation: rainbow-border 8s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    z-index: -1;
+}
+
+.school-link:hover::before {
+    opacity: 1;
+}
+
+@keyframes rainbow-border {
+    to {
+      background-position: 100% 0;
+    }
+}
+</style>
+</head>
+<body>
+
+<div id="particles-js"></div>
+
+<div class="content-wrapper">
+    <p>If it gives an error, reload the page</p>
+    <div class="school-links-container">
+      <a href="ok/craz.html" class="school-link">
+        <img src="img/craz.png" alt="school One Image" class="school-image">
+        <div class="school-text">
+          <h2>Craz</h2>
+          <p>Click to play!</p>
+        </div>
+      </a>
+      <a href="ok/poky.html" class="school-link">
+        <img src="img/poky.png" alt="school One Image" class="school-image">
+        <div class="school-text">
+          <h2>Poky</h2>
+          <p>Click to play!</p>
+        </div>
+      </a>
+      <a href="ok/black.html" class="school-link">
+        <img src="img/black.png" alt="school One Image" class="school-image">
+        <div class="school-text">
+          <h2>Black</h2>
+          <p>Click to play!</p>
+        </div>
+      </a>
+    </div>
+
+    <a href="ai/beanbasic/index.html" class="school-link">
+      <img src="https://typli.ai/_next/image?url=%2Fai-text-generator.png&w=1200&q=75" alt="school One Image" class="school-image">
+      <div class="school-text">
+        <h2>BEANBASIC AI</h2>
+        <p>Click to chat!</p>
+      </div>
+    </a>
+  </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      particlesJS('particles-js', {
+        particles: {
+          number: {
+            value: 300,
+            density: {
+              enable: true,
+              value_area: 800
+            }
+          },
+          color: {
+            value: '#ffffff'
+          },
+          shape: {
+            type: 'circle'
+          },
+          opacity: {
+            value: 0.5
+          },
+          size: {
+            value: 3
+          },
+          line_linked: {
+            enable: true,
+            distance: 150,
+            color: '#ffffff',
+            opacity: 0.4,
+            width: 1
+          },
+          move: {
+            enable: true,
+            speed: 7
+          }
+        },
+        interactivity: {
+          detect_on: 'canvas',
+          events: {
+            onhover: {
+              enable: true,
+              mode: 'attract'
+            },
+            onclick: {
+              enable: true,
+              mode: 'push'
+            },
+            resize: true
+          },
+          modes: {
+            attract: {
+              distance: 150,
+              duration: 0.5
+            }
+          }
+        },
+        retina_detect: true
+      });
+    });
+  </script>
+
+</body>
+</html>
