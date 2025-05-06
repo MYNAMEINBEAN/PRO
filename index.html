@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Schoology</title>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <script src="inspect.js" defer></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .password-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        input[type="password"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #iframe-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+        }
+
+        #translation-message, #error-message {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="password-container" id="password-form">
+    <h2>Enter Password (Morse Code)</h2>
+    <input type="password" id="password">
+    <button onclick="checkPassword()">Submit</button>
+    <p id="error-message" style="color: red; display: none;">Incorrect password.</p>
+    <p id="translation-message" style="color: green; display: none;"></p>
+</div>
+
+<div id="iframe-container"> 
+    <iframe src="Index.html" style="border:0px; width:100%; height:100%;" frameborder="0" allowfullscreen></iframe>
+</div>
+
+<script>
+    const morseCodeDict = {
+        '.-': 'A', '-...': 'B', '-.-.': 'C', '-..': 'D', '.': 'E', '..-.': 'F', '--.': 'G', '....': 'H',
+        '..': 'I', '.---': 'J', '-.-': 'K', '.-..': 'L', '--': 'M', '-.': 'N', '---': 'O', '.--.': 'P',
+        '--.-': 'Q', '.-.': 'R', '...': 'S', '-': 'T', '..-': 'U', '...-': 'V', '.--': 'W', '-..-': 'X',
+        '-.--': 'Y', '--..': 'Z', '-----': '0', '.----': '1', '..---': '2', '...--': '3', '....-': '4',
+        '.....': '5', '-....': '6', '--...': '7', '---..': '8', '----.': '9', '/': ' '
+
+    };
+
+    const validPasswords = ["HELLO", "AUGUSTYNJUREWICZ", "RACHAINPENZAK","AIDENMOSAFFA","DREW"];
+
+    function morseToEnglish(morse) {
+        return morse.trim().split(' ').map(code => morseCodeDict[code] || '?').join('');
+    }
+
+    const passwordForm = document.getElementById("password-form");
+    const iframeContainer = document.getElementById("iframe-container");
+    const passwordInput = document.getElementById("password");
+    const errorMessage = document.getElementById("error-message");
+    const translationMessage = document.getElementById("translation-message");
+
+    function checkPassword() {
+        const enteredPassword = passwordInput.value.trim();
+        const translatedPassword = morseToEnglish(enteredPassword).toUpperCase();
+
+        if (validPasswords.includes(translatedPassword)) {
+            translationMessage.textContent = `Welcome ${translatedPassword}!`;
+            translationMessage.style.display = "block";
+            errorMessage.style.display = "none";
+
+            // ✅ Log to Google Apps Script
+            fetch('https://script.google.com/macros/s/AKfycbwdh8qfelXanq3AJRa-56pvD1IHWQ2IYOh4erQgReUtQd4Qb9IdDqu-KmuU2q4iueK0/exec', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: translatedPassword,
+                    timestamp: new Date().toLocaleString()
+                })
+            });
+
+            // Show welcome for 5 seconds, then show iframe
+            setTimeout(() => {
+                passwordForm.style.display = "none";
+                iframeContainer.style.display = "block";
+            }, 5000);
+        } else {
+            errorMessage.style.display = "block";
+            translationMessage.style.display = "none";
+            passwordInput.value = "";
+        }
+    }
+</script>
+
+</body>
+</html>
