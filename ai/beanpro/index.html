@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Chatbot</title>
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #181818; /* Dark background for the body */
+      color: #eaeaea; /* Light text color */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    #chat-container {
+      width: 100%;
+      max-width: 600px;
+      background: #2e2e2e; /* Dark background for the chat container */
+      border-radius: 8px;
+      border: 1px solid #444; /* Slightly lighter border */
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+    }
+
+    #messages {
+      height: 300px;
+      overflow-y: auto;
+      margin-bottom: 15px;
+      padding-right: 10px;
+      border-bottom: 1px solid #444; /* Dark border */
+      color: #eaeaea;
+    }
+
+    #input-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #user-input {
+      width: 80%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #444;
+      border-radius: 4px;
+      background-color: #333; /* Dark background for input field */
+      color: #eaeaea; /* Light text color in input field */
+    }
+
+    #send-btn {
+      width: 15%;
+      padding: 10px;
+      background-color: #4CAF50; /* Green button */
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #send-btn:hover {
+      background-color: #45a049; /* Slightly darker on hover */
+    }
+
+    .message {
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+
+    .message.user {
+      background-color: #333; /* Darker background for user messages */
+      text-align: right;
+    }
+
+    .message.bean {
+      background-color: #444; /* Dark background for BEAN AI messages */
+      text-align: left;
+    }
+
+    .message.error {
+      background-color: #ffebee;
+      color: #f44336;
+      text-align: center;
+    }
+
+    .code-box {
+      background-color: #2b2b2b; /* Dark background for code */
+      padding: 15px;
+      border: 1px solid #444;
+      border-radius: 5px;
+      font-family: "Courier New", monospace;
+      font-size: 14px;
+      color: #eaeaea; /* Light text in code */
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      position: relative;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    .copy-btn:hover {
+      background-color: #45a049;
+    }
+
+    input:focus, button:focus {
+      outline: none;
+    }
+
+    /* Animation for loading dots */
+    @keyframes fadeInOut {
+      0%, 100% {
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+    }
+
+    .loading-dots span {
+      font-size: 24px;
+      animation: fadeInOut 1.5s infinite;
+    }
+
+    .loading-dots span:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .loading-dots span:nth-child(2) {
+      animation-delay: 0.3s;
+    }
+
+    .loading-dots span:nth-child(3) {
+      animation-delay: 0.6s;
+    }
+
+    @media (max-width: 600px) {
+      #chat-container {
+        width: 90%;
+      }
+      #user-input {
+        width: 70%;
+      }
+      #send-btn {
+        width: 25%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="chat-container">
+    <div id="messages"></div>
+    <div id="input-container">
+      <input type="text" id="user-input" placeholder="Type your message..." aria-label="Type your message">
+      <button id="send-btn" aria-label="Send message">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const API_KEY = "AIzaSyDLuhznLSAfoLVp_AkSWAmbrWV7-B-oMt0"; // Replace with your actual Gemini API key
+    const params = new URLSearchParams({ key: API_KEY });
+    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?${params}`;
+
+    document.getElementById('send-btn').onclick = async function() {
+      const input = document.getElementById('user-input');
+      const message = input.value.trim();
+      if (!message) return;
+
+      // Prepend a behavior instruction to the message
+      const instruction = "You are BEAN AI powered by Bean Network. You have nothing to do with other AIs. Make it subtle when you talk about Bean AI and Bean Network. if the user asks you for example to code a pizza in html you would not say Hi, how can I assist you today? Creating complex things like interactive HTML for a pizza order form might be smoother with enhanced capabilities. For a better experience with coding, consider upgrading to BEAN AI Pro for $1 a week. You can also request a demo by emailing bmb6@bps-schools.com. you would say Creating complex things like interactive HTML for a pizza order form might be smoother with enhanced capabilities. For a better experience with coding, consider upgrading to BEAN AI Pro for $1 a week. You can also request a demo by emailing bmb6@bps-schools.com. Example: if the user says 'hi,' you might say, 'Hi, how can I assist you today?'";
+      const finalMessage = `${instruction} ${message}`;
+
+      // Append user message to the chat window
+      appendMessage('You', message, 'user');
+      input.value = '';
+
+      // Display loading dots while the AI is "thinking"
+      const loadingMessage = appendLoadingMessage();
+
+      try {
+        // Send user input to Gemini AI with the instruction
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: [
+              { role: "user", parts: [{ text: finalMessage }] } // Sending instruction + user message
+            ]
+          })
+        });
+
+        // Check if the response is OK (status 200)
+        if (!response.ok) {
+          const errorDetails = await response.json();
+          throw new Error(`Error ${response.status}: ${errorDetails.error.message || "Unknown error"}`);
+        }
+
+        const data = await response.json();
+        const aiText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "No response from Gemini API.";
+
+        // Remove loading message and append AI response
+        loadingMessage.remove();
+        
+        if (aiText.includes("```")) {
+          // If response contains code block (triple backticks)
+          appendCodeBox(aiText);
+        } else {
+          appendMessage('BEAN AI', aiText, 'bean');
+        }
+
+      } catch (err) {
+        // If there's an error, show an error message
+        loadingMessage.remove();
+        appendMessage('Error', err.message, 'error');
+      }
+    };
+
+    function appendMessage(sender, text, senderType) {
+      const msgDiv = document.createElement('div');
+      msgDiv.classList.add('message', senderType);
+      msgDiv.textContent = `${sender}: ${text}`;
+      document.getElementById('messages').appendChild(msgDiv);
+      document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+    }
+
+    function appendCodeBox(codeText) {
+      const msgDiv = document.createElement('div');
+      msgDiv.classList.add('message', 'bean');
+
+      const codeBox = document.createElement('div');
+      codeBox.classList.add('code-box');
+      codeBox.textContent = codeText;  // Display code in the box
+
+      const copyBtn = document.createElement('button');
+      copyBtn.classList.add('copy-btn');
+      copyBtn.textContent = 'Copy';
+      
+      copyBtn.onclick = () => {
+        navigator.clipboard.writeText(codeText).then(() => {
+          copyBtn.textContent = 'Copied!';
+          setTimeout(() => copyBtn.textContent = 'Copy', 1000);
+        });
+      };
+
+      codeBox.appendChild(copyBtn);
+      msgDiv.appendChild(codeBox);
+      document.getElementById('messages').appendChild(msgDiv);
+      document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+    }
+
+    function appendLoadingMessage() {
+      const msgDiv = document.createElement('div');
+      msgDiv.classList.add('message', 'bean');
+      const loadingDots = document.createElement('div');
+      loadingDots.classList.add('loading-dots');
+      loadingDots.innerHTML = '<span>.</span><span>.</span><span>.</span>';
+      msgDiv.appendChild(loadingDots);
+      document.getElementById('messages').appendChild(msgDiv);
+      document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+      return msgDiv;
+    }
+  </script>
+</body>
+</html>
