@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Unblocked Games</title>
+  <title>Unblocked Schools</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,7 +30,7 @@
       background-color: #1f2937;
       color: #f3f4f6;
     }
-    .game-links-container {
+    .School-links-container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -39,7 +39,7 @@
       max-height: 500px;
       overflow-y: auto;
     }
-    .game-link {
+    .School-link {
       width: 300px;
       text-decoration: none;
       border-radius: 8px;
@@ -47,24 +47,24 @@
       background-color: #f9f9f9;
       transition: transform 0.2s ease-in-out;
     }
-    .game-link:hover {
+    .School-link:hover {
       transform: translateY(-5px);
     }
-    .game-image {
+    .School-image {
       width: 100%;
       height: auto;
       object-fit: cover;
       aspect-ratio: 3 / 2;
     }
-    .game-text {
+    .School-text {
       padding: 15px;
       text-align: center;
     }
-    .game-text h2 {
+    .School-text h2 {
       font-size: 1.2em;
       color: #333;
     }
-    .game-text p {
+    .School-text p {
       font-size: 0.9em;
       color: #666;
     }
@@ -73,22 +73,22 @@
 <body>
 
   <div class="search-container">
-    <input type="text" id="search-input" placeholder="Search games...">
+    <input type="text" id="search-input" placeholder="Search Schools...">
   </div>
 
   <div id="recentlyPlayed" class="p-4 text-white"></div>
   <div id="mostPlayed" class="p-4 text-white"></div>
-  <div class="game-links-container"></div>
+  <div class="School-links-container"></div>
 
   <script>
-    const gameList = [
+    const SchoolList = [
 
                   { name: "1", display: "1" },
             { name: "10-minutes-till-dawn", display: "10 Minutes Till Dawn" },
             { name: "100ng", display: "100ng" },
             { name: "1v1lol", display: "1v1 LOL" },
             { name: "1v1space", display: "1v1 Space" },
-            { name: "2020-game", display: "2020 Game" },
+            { name: "2020-School", display: "2020 School" },
             { name: "2048-multitask", display: "2048 Multitask" },
             { name: "2048", display: "2048" },
             { name: "8ball-billards-classic", display: "8 Ball Billiards Classic" },
@@ -243,8 +243,8 @@
             { name: "froggys-battle", display: "Froggy's Battle" },
             { name: "fruitninja", display: "Fruit Ninja" },
             { name: "frying-nemo", display: "Frying Nemo" },
-            { name: "game-inside", display: "Game Inside" },
-            { name: "generic-fishing-game", display: "Generic Fishing Game" },
+            { name: "School-inside", display: "School Inside" },
+            { name: "generic-fishing-School", display: "Generic Fishing School" },
             { name: "geodash-2", display: "Geo Dash 2" },
             { name: "geodash", display: "Geo Dash" },
             { name: "geometry_jump_sketchy", display: "Geometry Jump Sketchy" },
@@ -290,7 +290,7 @@
             { name: "just-one-boss", display: "Just One Boss" },
             { name: "justfall", display: "Just Fall" },
             { name: "kart-fight-io", display: "Kart Fight IO" },
-            { name: "kitchen-gun-game", display: "Kitchen Gun Game" },
+            { name: "kitchen-gun-School", display: "Kitchen Gun School" },
             { name: "kittencannon", display: "Kitten Cannon" },
             { name: "klocki", display: "Klocki" },
             { name: "konnekt", display: "Konnekt" },
@@ -382,7 +382,7 @@
             { name: "rooftop-snipers", display: "Rooftop Snipers" },
             { name: "run-3", display: "Run 3" },
             { name: "run3", display: "Run 3" },
-            { name: "sand-game", display: "Sand Game" },
+            { name: "sand-School", display: "Sand School" },
             { name: "sandboxels", display: "Sandboxels" },
             { name: "scrambled-eggs", display: "Scrambled Eggs" },
             { name: "scrapmetal", display: "Scrap Metal" },
@@ -458,7 +458,7 @@
             { name: "thebattle", display: "The Battle" },
             { name: "theheist", display: "The Heist" },
             { name: "themazeofspacegoblins", display: "The Maze Of Space Goblins" },
-            { name: "there-is-no-game", display: "There Is No Game" },
+            { name: "there-is-no-School", display: "There Is No School" },
             { name: "thisistheonlylevel", display: "This Is The Only Level" },
             { name: "time-shooter-3", display: "Time Shooter 3" },
             { name: "tiny-fishing", display: "Tiny Fishing" },
@@ -490,8 +490,8 @@
             { name: "wipo", display: "Wipo" },
             { name: "wolf3d", display: "Wolf 3D" },
             { name: "wordle", display: "Wordle" },
-            { name: "worlds-hardest-game-2", display: "Worlds Hardest Game 2" },
-            { name: "worlds-hardest-game", display: "Worlds Hardest Game" },
+            { name: "worlds-hardest-School-2", display: "Worlds Hardest School 2" },
+            { name: "worlds-hardest-School", display: "Worlds Hardest School" },
             { name: "x-trial-racing", display: "X Trial Racing" },
             { name: "xx142-b2exe", display: "XX142 B2EXE" },
             { name: "yoshifabrication", display: "Yoshi Fabrication" },
@@ -502,61 +502,61 @@
 
     ];
 
-    const container = document.querySelector('.game-links-container');
+    const container = document.querySelector('.School-links-container');
     const searchInput = document.getElementById('search-input');
 
-    function renderGames(games) {
+    function renderSchools(Schools) {
       container.innerHTML = '';
-      games.forEach(game => {
-        const gameLink = document.createElement('a');
-        gameLink.href = `/HTML-Games-V2/${game.name}`;
-        gameLink.className = 'game-link';
-        gameLink.onclick = () => trackGame(game.display, game.name);
+      Schools.forEach(School => {
+        const SchoolLink = document.createElement('a');
+        SchoolLink.href = `/HTML-Schools-V2/${School.name}`;
+        SchoolLink.className = 'School-link';
+        SchoolLink.onclick = () => trackSchool(School.display, School.name);
 
-        const gameImage = document.createElement('img');
-        gameImage.src = `/img/${game.name}.png`;
-        gameImage.alt = game.display;
-        gameImage.className = 'game-image';
-        gameImage.onerror = () => { gameImage.src = '/img/placeholder.png'; };
+        const SchoolImage = document.createElement('img');
+        SchoolImage.src = `/img/${School.name}.png`;
+        SchoolImage.alt = School.display;
+        SchoolImage.className = 'School-image';
+        SchoolImage.onerror = () => { SchoolImage.src = '/img/placeholder.png'; };
 
-        const gameText = document.createElement('div');
-        gameText.className = 'game-text';
+        const SchoolText = document.createElement('div');
+        SchoolText.className = 'School-text';
 
         const title = document.createElement('h2');
-        title.textContent = game.display;
-        gameText.appendChild(title);
+        title.textContent = School.display;
+        SchoolText.appendChild(title);
 
         const description = document.createElement('p');
         description.textContent = 'Click to play!';
-        gameText.appendChild(description);
+        SchoolText.appendChild(description);
 
-        gameLink.appendChild(gameImage);
-        gameLink.appendChild(gameText);
-        container.appendChild(gameLink);
+        SchoolLink.appendChild(SchoolImage);
+        SchoolLink.appendChild(SchoolText);
+        container.appendChild(SchoolLink);
       });
     }
 
-    function filterGames(searchTerm) {
-      const filteredGames = gameList.filter(game =>
-        game.display.toLowerCase().includes(searchTerm.toLowerCase())
+    function filterSchools(searchTerm) {
+      const filteredSchools = SchoolList.filter(School =>
+        School.display.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      renderGames(filteredGames);
+      renderSchools(filteredSchools);
     }
 
     searchInput.addEventListener('input', function() {
-      filterGames(this.value);
+      filterSchools(this.value);
     });
 
-    function trackGame(gameDisplay, gameName) {
-      let recent = JSON.parse(localStorage.getItem("recentGames")) || [];
+    function trackSchool(SchoolDisplay, SchoolName) {
+      let recent = JSON.parse(localStorage.getItem("recentSchools")) || [];
       let plays = JSON.parse(localStorage.getItem("mostPlayed")) || {};
 
-      recent = recent.filter(g => g.name !== gameName);
-      recent.unshift({ name: gameName, display: gameDisplay });
+      recent = recent.filter(g => g.name !== SchoolName);
+      recent.unshift({ name: SchoolName, display: SchoolDisplay });
       if (recent.length > 5) recent.pop();
-      localStorage.setItem("recentGames", JSON.stringify(recent));
+      localStorage.setItem("recentSchools", JSON.stringify(recent));
 
-      plays[gameName] = (plays[gameName] || 0) + 1;
+      plays[SchoolName] = (plays[SchoolName] || 0) + 1;
       localStorage.setItem("mostPlayed", JSON.stringify(plays));
     }
 
@@ -564,13 +564,13 @@
       const recentContainer = document.getElementById("recentlyPlayed");
       const mostContainer = document.getElementById("mostPlayed");
 
-      const recent = JSON.parse(localStorage.getItem("recentGames")) || [];
+      const recent = JSON.parse(localStorage.getItem("recentSchools")) || [];
       if (recent.length > 0) {
         recentContainer.innerHTML = `
           <h2 class="text-xl font-semibold mb-2">Recently Played</h2>
           <div class="flex flex-wrap gap-4">
             ${recent.map(g => `
-              <a href="/HTML-Games-V2/${g.name}" class="underline text-blue-300" onclick="trackGame('${g.display}', '${g.name}')">${g.display}</a>
+              <a href="/HTML-Schools-V2/${g.name}" class="underline text-blue-300" onclick="trackSchool('${g.display}', '${g.name}')">${g.display}</a>
             `).join('')}
           </div>`;
       }
@@ -582,15 +582,15 @@
           <h2 class="text-xl font-semibold mb-2 mt-4">Most Played</h2>
           <div class="flex flex-wrap gap-4">
             ${sorted.map(([name, count]) => {
-              const game = gameList.find(g => g.name === name);
-              if (!game) return '';
-              return `<a href="/HTML-Games-V2/${game.name}" class="underline text-green-300" onclick="trackGame('${game.display}', '${game.name}')">${game.display} (${count})</a>`;
+              const School = SchoolList.find(g => g.name === name);
+              if (!School) return '';
+              return `<a href="/HTML-Schools-V2/${School.name}" class="underline text-green-300" onclick="trackSchool('${School.display}', '${School.name}')">${School.display} (${count})</a>`;
             }).join('')}
           </div>`;
       }
     }
 
-    renderGames(gameList);
+    renderSchools(SchoolList);
     renderRecentAndMost();
   </script>
 
