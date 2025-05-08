@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bean AI</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0f0f0f;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      gap: 30px;
+    }
+
+    .btn {
+      padding: 15px 30px;
+      background-color: #1c1c1c;
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      position: relative;
+      text-decoration: none;
+      z-index: 1;
+      transition: transform 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: -3px;
+      left: -3px;
+      right: -3px;
+      bottom: -3px;
+      border-radius: 15px;
+      background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+      background-size: 400% 100%;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+      animation: rainbow 8s linear infinite;
+    }
+
+    .btn:hover::before {
+      opacity: 1;
+    }
+
+    @keyframes rainbow {
+      to {
+        background-position: 100% 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="beanbasic/index.html" class="btn">Bean AI Basic</a>
+  <a href="beanpro/index.html" class="btn">Bean AI Pro</a>
+
+</body>
+</html>
