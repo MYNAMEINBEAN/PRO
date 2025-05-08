@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Schoology</title>
+<style>
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #0F0F0F;
+    color: #fff;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    overflow: auto;
+    background-image: url('');
+    background-size: cover;
+    background-position: center;
+    transition: background-image 0.5s ease-in-out;
+}
+#loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    font-size: 2em;
+    font-weight: bold;
+    color: #C93131;
+}
+#loader span {
+    opacity: 0;
+    margin: 0 5px;
+    animation: textFadeInOut 1.5s infinite ease-in-out;
+}
+@keyframes textFadeInOut {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+#content {
+    display: none;
+}
+.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+.search-container {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 30px;
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.search-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-left: 5px;
+    cursor: pointer;
+}
+.search-input {
+    border: none;
+    outline: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    width: 300px;
+}
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 70px;
+    background-color: #111;
+    color: #fff;
+    transition: width 0.8s ease;
+    overflow: hidden;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    padding-top: 70px;
+}
+.sidebar:hover {
+    width: 200px;
+}
+.sidebar-button {
+    padding: 15px;
+    text-align: left;
+    cursor: pointer;
+    border-bottom: 1px solid #333;
+    white-space: nowrap;
+    display: block;
+    text-decoration: none;
+    color: #fff;
+}
+.sidebar-button:hover {
+    background-color: #333;
+}
+.beansad {
+    align-items: center;
+    padding: 15px;
+    text-align: right;
+    cursor: pointer;
+    border-bottom: 1px solid #333;
+    white-space: nowrap;
+}
+#appsBtn::before {
+    content: "Apps";
+}
+#gamesBtn::before {
+    content: "Games";
+}
+#aiBtn::before {
+    content: "Ai";
+}
+#freeProBtn::before {
+    content: "Get pro free";
+}
+#ContentBtn::before {
+    content: "Content";
+}
+.header-container {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #000;
+    color: #fff;
+    padding: 10px 20px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+#mainContent {
+    padding-top: 50px;
+}
+.header-container.hidden {
+    opacity: 0;
+    transform: translateY(-50px);
+}
+.content-wrapper {
+    position: relative;
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 60px;
+}
+.school-links-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.school-link {
+    width: 300px;
+    text-decoration: none;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+}
+.school-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+.school-link:hover .school-image {
+    transform: scale(1.05);
+    opacity: 0.8;
+}
+.school-text {
+    padding: 15px;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+.school-link::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border-radius: 11px;
+    background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+    background-size: 400% 100%;
+    background-position: 0 0;
+    animation: rainbow-border 8s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    z-index: -1;
+}
+.school-link:hover::before {
+    opacity: 1;
+}
+@keyframes rainbow-border {
+    to {
+        background-position: 100% 0;
+    }
+}
+#iframeContainer {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    border-radius: 0;
+    overflow: hidden;
+    box-shadow: none;
+    background: #111;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: none;
+}
+#iframeContainer.active {
+    display: block;
+}
+</style>
+</head>
+<body>
+    <div id="loader">
+        <span>A</span><span> </span><span>N</span><span>E</span><span>W</span><span> </span>
+        <span>E</span><span>R</span><span>A</span><span> </span><span>T</span><span>O</span><span> </span>
+        <span>U</span><span>N</span><span>B</span><span>L</span><span>O</span><span>C</span><span>K</span><span>E</span><span>D</span><span> </span>
+        <span>G</span><span>A</span><span>M</span><span>E</span><span>S</span><span>.</span><span>.</span><span>.</span>
+    </div>
+    <div id="content">
+        <div class="search-container">
+            <img id="searchIcon" src="https://duckduckgo.com/assets/logo_homepage.alt.v108.svg" alt="DuckDuckGo" class="search-icon">
+            <input type="text" class="search-input" placeholder="browse the internet...">
+        </div>
+        <div class="sidebar">
+            <a href="apps/index.html" id="appsBtn" class="sidebar-button"></a>
+            <a href="games/index.html" id="gamesBtn" class="sidebar-button"></a>
+            <a href="ai/index.html" id="aiBtn" class="sidebar-button"></a>
+            <a href="freepro.html" id="freeProBtn" class="sidebar-button"></a>
+        </div>
+        <div id="iframeContainer"></div>
+    </div>
+
+<script>
+    const backgroundImages = [
+        "https://static.vecteezy.com/system/resources/thumbnails/048/786/492/small/dog-with-sunglasses-under-neon-lights-against-a-dark-space-like-background-cute-cool-dog-photo.jpg",
+        "https://thumbs.dreamstime.com/b/cool-wallpapers-backgrounds-check-out-our-68126782.jpg",
+        "https://wallpapersok.com/images/high/cool-pictures-fractal-pattern-e7m45vfh0lrij690.jpg",
+        "https://wallpapersok.com/images/thumbnail/best-cool-luminous-fox-40lkhq7b7tl3p1qw.webp",
+        "https://png.pngtree.com/background/20240824/original/pngtree-blue-and-purple-neon-star-3d-art-background-with-a-cool-picture-image_10210904.jpg",
+        "https://wallpapersok.com/images/hd/cool-picture-wolf-art-o0ixt449edz5dgpa.jpg",
+        "https://m.media-amazon.com/images/I/617-CkV-joL.jpg"
+    ];
+
+    function changeBackgroundImage() {
+        const randomIndex = Math.floor(Math.random() * backgroundImages.length);
+        document.body.style.backgroundImage = `url('${backgroundImages[randomIndex]}')`;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const loader = document.getElementById('loader');
+        const content = document.getElementById('content');
+        const searchIcon = document.getElementById('searchIcon');
+        const searchInput = document.querySelector('.search-input');
+        const iframeContainer = document.getElementById('iframeContainer');
+        let isGoogle = false;
+
+        // Set a random background image
+        changeBackgroundImage();
+
+        // Show loader then hide after 5 seconds
+        loader.style.display = 'flex';
+        setTimeout(() => {
+            loader.classList.add('fade-out');
+            setTimeout(() => {
+                loader.style.display = 'none';
+                content.style.display = 'block';
+            }, 500);
+        }, 5000);
+
+        // Toggle search engine
+        searchIcon.addEventListener('click', function () {
+            isGoogle = !isGoogle;
+            searchIcon.src = isGoogle
+                ? "https://www.google.com/favicon.ico"
+                : "https://duckduckgo.com/assets/logo_homepage.alt.v108.svg";
+            searchIcon.alt = isGoogle ? "Google" : "DuckDuckGo";
+        });
+
+        // Search or embed URL
+        searchInput.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                let query = searchInput.value.trim();
+                if (!query) return;
+
+                let isUrl = false;
+                try {
+                    let testUrl = new URL(query.includes('://') ? query : 'https://' + query);
+                    if (testUrl.hostname.includes('.')) isUrl = true;
+                } catch (e) {
+                    isUrl = false;
+                }
+
+                let targetUrl = isUrl
+                    ? (query.includes('://') ? query : 'https://' + query)
+                    : (isGoogle
+                        ? `https://www.google.com/search?q=${encodeURIComponent(query)}`
+                        : `https://duckduckgo.com/?q=${encodeURIComponent(query)}`);
+
+                let embedUrl = `https://www.secured.wiki/s/embed.html#${encodeURI(targetUrl)}`;
+
+                iframeContainer.innerHTML = `<iframe id="dynamicFrame" src="${embedUrl}" style="border:0px #ffffff none;" name="myiFrame" scrolling="yes" frameborder="1" marginheight="0px" marginwidth="0px" height="100%" allowfullscreen></iframe>`;
+                iframeContainer.classList.add('active');
+                
+            }
+        });
+    });
+</script>
+</body>
+</html>
