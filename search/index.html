@@ -318,7 +318,7 @@ body, html {
 
                 let embedUrl = `https://www.secured.wiki/s/embed.html#${encodeURI(targetUrl)}`;
 
-                iframeContainer.innerHTML = `<iframe id="dynamicFrame" src="${embedUrl}" style="border:0px #ffffff none;" name="myiFrame" scrolling="yes" frameborder="1" marginheight="0px" marginwidth="0px" height="100%" allowfullscreen></iframe>`;
+                iframeContainer.innerHTML = `<iframe id="dynamicFrame" src="${embedUrl}" style="border:0px #ffffff none;" name="myiFrame" scrolling="yes" frameborder="1" marginheight="0px" marginwidth="0px" height="100%" width="100%" allowfullscreen></iframe>`;
                 iframeContainer.classList.add('active');
                 
             }
