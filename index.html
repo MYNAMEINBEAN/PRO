@@ -1,419 +1,182 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Schoology</title>
-<style>
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    background-color: #0F0F0F;
-    color: #fff;
-    font-family: 'Be Vietnam Pro', sans-serif; /* You might need to include this font */
-    overflow: auto; /* Enable scrolling by default */
-    background-image: url(''); /* Will be set by JavaScript */
-    background-size: cover;
-    background-position: center;
-    transition: background-image 0.5s ease-in-out; /* Optional: for a smooth transition */
-}
-
-#loader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #111;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    font-size: 2em; /* Adjust size as needed */
-    font-weight: bold;
-    color: #C93131;
-}
-
-#loader span {
-    opacity: 0;
-    margin: 0 5px; /* Adjust spacing between letters */
-    animation: textFadeInOut 1.5s infinite ease-in-out;
-}
-
-/* ... (rest of your loader span styles) ... */
-
-@keyframes textFadeInOut {
-    0%, 100% { opacity: 0; }
-    50% { opacity: 1; }
-}
-
-#content {
-    display: none; /* Initially hidden */
-}
-
-.fade-out {
-    opacity: 0;
-    pointer-events: none;
-}
-
-/* Existing Styles (adjust as needed) */
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 70px;
-    background-color: #111;
-    color: #fff;
-    transition: width 0.8s ease;
-    overflow: hidden;
-    z-index: 100;
-    display: flex;
-    flex-direction: column;
-}
-
-.sidebar:hover {
-    width: 200px;
-}
-
-.sidebar-button {
-    padding: 15px;
-    text-align: left;
-    cursor: pointer;
-    border-bottom: 1px solid #333;
-    white-space: nowrap;
-    display: block; /* Make the whole area clickable */
-    text-decoration: none; /* Remove default link styling */
-    color: #fff; /* Inherit text color */
-}
-.sidebar-button:hover {
-    background-color: #333;
-}
-.beansad {
-    align-items: center;
-    padding: 15px;
-    text-align: right;
-    cursor: pointer;
-    border-bottom: 1px solid #333;
-    white-space: nowrap;
-}
-#appsBtn::before {
-    content: "Apps";
-}
-#gamesBtn::before{
-  content: "Games";
-}
-#aiBtn::before {
-    content: "Ai";
-}
-#freeProBtn::before {
-    content: "Get pro free";
-}
-#ContentBtn::before{
-  content: "Content";
-}
-.header-container {
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #000;
-    color: #fff;
-    padding: 10px 20px;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-#addLinkBtn {
-    position: fixed;
-    top: 70px;
-    right: 20px;
-    z-index: 100;
-    font-size: 1rem;
-    font-family: inherit;
-    padding: 10px 20px;
-    border-radius: 50px;
-    border: 10px solid red;
-    background: #fff;
-    color: #222;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    font-weight: bold;
-    letter-spacing: 1px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-#addLinkBtn span.plus {
-    font-size: 1.2rem;
-    line-height: 1;
-    font-weight: bold;
-    margin-right: 6px;
-    color: red;
-}
-#addLinkBtn:hover {
-    background: red;
-    color: #fff;
-}
-
-#mainContent {
-    padding-top: 50px;
-}
-
-.header-container.hidden {
-    opacity: 0;
-    transform: translateY(-50px);
-}
-
-.content-wrapper {
-    position: relative;
-    z-index: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 60px;
-}
-.school-links-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
-}
-.school-link {
-    width: 300px;
-    text-decoration: none;
-    border-radius: 8px;
-    overflow: hidden;
-    position: relative;
-}
-.school-image {
-    display: block;
-    width: 100%;
-    height: auto;
-    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-}
-.school-link:hover .school-image {
-    transform: scale(1.05);
-    opacity: 0.8;
-}
-.school-text {
-    padding: 15px;
-    text-align: center;
-    background-color: #f9f9f9;
-}
-.school-link::before {
-    content: '';
-    position: absolute;
-    top: -3px;
-    left: -3px;
-    right: -3px;
-    bottom: -3px;
-    border-radius: 11px;
-    background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
-    background-size: 400% 100%;
-    background-position: 0 0;
-    animation: rainbow-border 8s linear infinite;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-    z-index: -1;
-}
-.school-link:hover::before {
-    opacity: 1;
-}
-@keyframes rainbow-border {
-    to {
-        background-position: 100% 0;
+  <title>Schoology</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: #0F0F0F;
+      color: #fff;
+      font-family: 'Be Vietnam Pro', sans-serif;
+      overflow: auto;
+      background-image: url('');
+      background-size: cover;
+      background-position: center;
+      transition: background-image 0.5s ease-in-out;
     }
-}
-#iframeContainer {
-    width: 100vw;
-    height: 100vh;
-    margin: 0;
-    border-radius: 0;
-    overflow: hidden;
-    box-shadow: none;
-    background: #111;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 10;
-    display: none;
-}
-#iframeContainer.active {
-    display: block;
-}
-</style>
+
+    #loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      font-size: 2em;
+      font-weight: bold;
+      color: #C93131;
+    }
+
+    #loader span {
+      opacity: 0;
+      margin: 0 5px;
+      animation: textFadeInOut 1.5s infinite ease-in-out;
+    }
+
+    @keyframes textFadeInOut {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+
+    #content {
+      display: none;
+    }
+
+    .fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 70px;
+      background-color: #111;
+      color: #fff;
+      transition: width 0.8s ease;
+      overflow: hidden;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar:hover {
+      width: 200px;
+    }
+
+    .sidebar-button {
+      padding: 15px;
+      text-align: left;
+      cursor: pointer;
+      border-bottom: 1px solid #333;
+      white-space: nowrap;
+      display: block;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .sidebar-button:hover {
+      background-color: #333;
+    }
+
+    #appsBtn::before {
+      content: "Apps";
+    }
+    #gamesBtn::before {
+      content: "Games";
+    }
+    #aiBtn::before {
+      content: "Ai";
+    }
+    #freeProBtn::before {
+      content: "Get pro free";
+    }
+    #searchBtn::before {
+      content: "Search";
+    }
+
+    #iframeContainer {
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      background: #111;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 10;
+      display: none;
+    }
+
+    #iframeContainer.active {
+      display: block;
+    }
+
+    @keyframes rainbow-border {
+      to { background-position: 100% 0; }
+    }
+  </style>
 </head>
 <body>
-    <div id="loader">
-        <span>A</span>
-        <span> </span>
+  <div id="loader">
+    <span>A</span><span> </span><span>N</span><span>E</span><span>W</span><span> </span>
+    <span>E</span><span>R</span><span>A</span><span> </span><span>T</span><span>O</span><span> </span>
+    <span>U</span><span>N</span><span>B</span><span>L</span><span>O</span><span>C</span>
+    <span>K</span><span>E</span><span>D</span><span> </span><span>G</span><span>A</span>
+    <span>M</span><span>E</span><span>S</span><span>.</span><span>.</span><span>.</span>
+  </div>
 
-        <span>N</span>
-        <span>E</span>
-        <span>W</span>
-        <span> </span>
-
-        <span>E</span>
-        <span>R</span>
-        <span>A</span>
-        <span> </span>
-
-        <span>T</span>
-        <span>O</span>
-        <span> </span>
-
-        <span>U</span>
-        <span>N</span>
-        <span>B</span>
-        <span>L</span>
-        <span>O</span>
-        <span>C</span>
-        <span>K</span>
-        <span>E</span>
-        <span>D</span>
-        <span> </span>
-
-        <span>G</span>
-        <span>A</span>
-        <span>M</span>
-        <span>E</span>
-        <span>S</span>
-        <span>.</span>
-        <span>.</span>
-        <span>.</span>
-    </div>
-    <div id="content">
-        <div class="sidebar">
-            <a href="apps/index.html" id="appsBtn" class="sidebar-button"></a>
-            <a href="gums/index.html" id="gamesBtn" class="sidebar-button"></a>
-            <a href="ai/index.html" id="aiBtn" class="sidebar-button"></a>
-            <a href="freepro.html" id="freeProBtn" class="sidebar-button"></a>
-        </div>
-        <button id="addLinkBtn"><span class="plus">&#43;</span> Add Link</button>
-        <div id="iframeContainer"></div>
+  <div id="content">
+    <div class="sidebar">
+      <a href="apps/index.html" id="appsBtn" class="sidebar-button"></a>
+      <a href="gums/index.html" id="gamesBtn" class="sidebar-button"></a>
+      <a href="ai/index.html" id="aiBtn" class="sidebar-button"></a>
+      <a href="freepro.html" id="freeProBtn" class="sidebar-button"></a>
+      <a href="search/index.html" id="searchBtn" class="sidebar-button"></a>
     </div>
 
-    <script>
-        const backgroundImages = [
-            "https://static.vecteezy.com/system/resources/thumbnails/048/786/492/small/dog-with-sunglasses-under-neon-lights-against-a-dark-space-like-background-cute-cool-dog-photo.jpg",
-            "https://thumbs.dreamstime.com/b/cool-wallpapers-backgrounds-check-out-our-68126782.jpg",
-            "https://wallpapersok.com/images/high/cool-pictures-fractal-pattern-e7m45vfh0lrij690.jpg",
-            "https://wallpapersok.com/images/thumbnail/best-cool-luminous-fox-40lkhq7b7tl3p1qw.webp",
-            "https://png.pngtree.com/background/20240824/original/pngtree-blue-and-purple-neon-star-3d-art-background-with-a-cool-picture-image_10210904.jpg",
-            "https://wallpapersok.com/images/hd/cool-picture-wolf-art-o0ixt449edz5dgpa.jpg",
-            "https://m.media-amazon.com/images/I/617-CkV-joL.jpg"
-        ];
+    <div id="iframeContainer"></div>
+  </div>
 
-        function changeBackgroundImage() {
-            const randomIndex = Math.floor(Math.random() * backgroundImages.length);
-            document.body.style.backgroundImage = `url('${backgroundImages[randomIndex]}')`;
-        }
+  <script>
+    const backgroundImages = [
+      "https://static.vecteezy.com/system/resources/thumbnails/048/786/492/small/dog-with-sunglasses-under-neon-lights-against-a-dark-space-like-background-cute-cool-dog-photo.jpg",
+      "https://thumbs.dreamstime.com/b/cool-wallpapers-backgrounds-check-out-our-68126782.jpg",
+      "https://wallpapersok.com/images/high/cool-pictures-fractal-pattern-e7m45vfh0lrij690.jpg",
+      "https://wallpapersok.com/images/thumbnail/best-cool-luminous-fox-40lkhq7b7tl3p1qw.webp",
+      "https://png.pngtree.com/background/20240824/original/pngtree-blue-and-purple-neon-star-3d-art-background-with-a-cool-picture-image_10210904.jpg",
+      "https://wallpapersok.com/images/hd/cool-picture-wolf-art-o0ixt449edz5dgpa.jpg",
+      "https://m.media-amazon.com/images/I/617-CkV-joL.jpg"
+    ];
 
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set initial background
-            changeBackgroundImage();
+    function changeBackgroundImage() {
+      const randomIndex = Math.floor(Math.random() * backgroundImages.length);
+      document.body.style.backgroundImage = `url('${backgroundImages[randomIndex]}')`;
+    }
 
-            const loader = document.getElementById('loader');
-            const content = document.getElementById('content');
-            const randomText = document.getElementById('random-text');
-            const addLinkBtn = document.getElementById('addLinkBtn');
-            const iframeContainer = document.getElementById('iframeContainer');
-            const headerContainer = document.querySelector('.header-container');
-            const appsBtn = document.getElementById('appsBtn');
-            const gamesBtn = document.getElementById('gamesBtn');
-            const aiBtn = document.getElementById('aiBtn');
+    document.addEventListener('DOMContentLoaded', function() {
+      changeBackgroundImage();
 
-            // Show loader and random text
-            loader.style.display = 'flex';
-            // randomText.style.display = 'none'; // Removed the random text
+      const loader = document.getElementById('loader');
+      const content = document.getElementById('content');
+      const iframeContainer = document.getElementById('iframeContainer');
 
-            // Hide loader and show content after 5 seconds
-            setTimeout(() => {
-                loader.classList.add('fade-out');
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                    content.style.display = 'block';
-                    // Initial margin-top after loader disappears
-                }, 500); // Transition duration
-            }, 5000);
-
-            addLinkBtn.addEventListener('click', function() {
-                let url = prompt("Enter URL (e.g. https://example.com):");
-                if (!url) return;
-
-                // Add https:// if missing
-                if (!/^https?:\/\//i.test(url)) {
-                    url = "https://" + url;
-                }
-
-                // Validate URL using URL constructor and basic domain check
-                let valid = true;
-                try {
-                    let parsed = new URL(url);
-                    if (!/^https?:$/.test(parsed.protocol)) valid = false;
-                    if (!/\./.test(parsed.hostname)) valid = false;
-                } catch (e) {
-                    valid = false;
-                }
-
-                if (!valid) {
-                    alert("Please enter a valid URL (e.g. https://example.com)");
-                    return;
-                }
-
-                // Hide main content
-                // mainContent.style.display = 'none'; // mainContent is removed
-
-                // Construct secured.wiki embed URL
-                let embedUrl = "https://www.secured.wiki/s/embed.html#" + encodeURI(url);
-
-                // Create iframe HTML
-                let iframeHtml = `<iframe id="dynamicFrame" src="${embedUrl}" style="border:0px #ffffff none;" name="myiFrame" scrolling="yes" frameborder="1" marginheight="0px" marginwidth="0px" height="100%" allowfullscreen></iframe>`;
-
-                // Show and insert iframe
-                iframeContainer.classList.add('active');
-                iframeContainer.innerHTML = iframeHtml;
-
-                // After 10 seconds, reload the iframe
-                setTimeout(function() {
-                    let frame = document.getElementById('dynamicFrame');
-                    if (frame) frame.src = frame.src;
-                }, 10000);
-            });
-
-            let lastScrollTop = 0;
-
-            window.addEventListener('scroll', function() {
-                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                if (scrollTop > lastScrollTop) {
-                    // Scrolling down
-                    headerContainer.classList.add('hidden');
-                } else {
-                    // Scrolling up
-                    headerContainer.classList.remove('hidden');
-                }
-                lastScrollTop = scrollTop;
-
-                // Adjust main content margin dynamically on scroll
-                if (content.style.display === 'block') {
-                    // Since mainContent is removed, this part might need adjustment
-                    // if you have other elements that need margin adjustment.
-                    // For now, it won't do anything significant.
-                    if (scrollTop === 0) {
-                        // If you add elements below the buttons, adjust margin here
-                        // content.style.marginTop = headerContainer.offsetHeight + addLinkBtn.offsetHeight + 10 + 'px';
-                    } else if (scrollTop > 0) {
-                        // If you add elements below the buttons, adjust margin here
-                        // content.style.marginTop = headerContainer.offsetHeight + 10 + 'px';
-                    }
-                }
-            });
-        });
-    </script>
+      setTimeout(() => {
+        loader.classList.add('fade-out');
+        setTimeout(() => {
+          loader.style.display = 'none';
+          content.style.display = 'block';
+        }, 500);
+      }, 5000);
+    });
+  </script>
 </body>
 </html>
